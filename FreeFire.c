@@ -9,20 +9,20 @@
 // ===============================================
 
 // Estrutura que representa um item da mochila
-struct Item {
+typedef struct Item {
     char nome[30];
     char tipo[20];
     int quantidade;
-};
+} Item;
 
-// ------------------------------------------------------------
-// Função que lista os itens da mochila (com colunas alinhadas)
-// ------------------------------------------------------------
-void listarItens(struct Item mochila[], int qtdItens) {
+// -----------------------------------------------------
+// Função que lista os itens da mochila
+// -----------------------------------------------------
+void listarItens(Item mochila[], int qtdItens) {
     printf("\n--- ITENS NA MOCHILA (%d/10) ---\n", qtdItens);
-    printf("-------------------------------------------------------------\n");
+    printf("--------------------------------------------------------------\n");
     printf("%-25s | %-20s | %-10s\n", "NOME", "TIPO", "QUANTIDADE");
-    printf("-------------------------------------------------------------\n");
+    printf("--------------------------------------------------------------\n");
 
     for (int i = 0; i < qtdItens; i++) {
         printf("%-25s | %-20s | %-10d\n",
@@ -35,19 +35,19 @@ void listarItens(struct Item mochila[], int qtdItens) {
         printf("Mochila vazia.\n");
     }
 
-    printf("-------------------------------------------------------------\n");
+    printf("--------------------------------------------------------------\n");
 }
 
-// ------------------------------------------------------------
+// -----------------------------------------------------
 // Função que adiciona um item na mochila
-// ------------------------------------------------------------
-void adicionarItem(struct Item mochila[], int *qtdItens) {
+// -----------------------------------------------------
+void adicionarItem(Item mochila[], int *qtdItens) {
     if (*qtdItens >= 10) {
         printf("\nA mochila está cheia! Remova algo antes de adicionar.\n");
         return;
     }
 
-    struct Item novo;
+    Item novo;
     printf("\n--- Cadastro de Item %d ---\n", *qtdItens + 1);
     printf("Nome do item: ");
     scanf(" %[^\n]", novo.nome);
@@ -62,10 +62,10 @@ void adicionarItem(struct Item mochila[], int *qtdItens) {
     printf("\nItem adicionado com sucesso!\n");
 }
 
-// ------------------------------------------------------------
+// -----------------------------------------------------
 // Função que remove um item da mochila
-// ------------------------------------------------------------
-void removerItem(struct Item mochila[], int *qtdItens) {
+// -----------------------------------------------------
+void removerItem(Item mochila[], int *qtdItens) {
     if (*qtdItens <= 0) {
         printf("\nA mochila está vazia!\n");
         return;
@@ -95,10 +95,10 @@ void removerItem(struct Item mochila[], int *qtdItens) {
     }
 }
 
-// ------------------------------------------------------------
+// -----------------------------------------------------
 // Função que busca um item pelo nome
-// ------------------------------------------------------------
-void buscarItem(struct Item mochila[], int qtdItens) {
+// -----------------------------------------------------
+void buscarItem(Item mochila[], int qtdItens) {
     if (qtdItens == 0) {
         printf("\nA mochila está vazia.\n");
         return;
@@ -113,14 +113,14 @@ void buscarItem(struct Item mochila[], int qtdItens) {
     for (int i = 0; i < qtdItens; i++) {
         if (strcmp(mochila[i].nome, nomeBusca) == 0) {
             printf("\nItem encontrado!\n");
-            printf("-------------------------------------------------------------\n");
+            printf("--------------------------------------------------------------\n");
             printf("%-25s | %-20s | %-10s\n", "NOME", "TIPO", "QUANTIDADE");
-            printf("-------------------------------------------------------------\n");
+            printf("--------------------------------------------------------------\n");
             printf("%-25s | %-20s | %-10d\n",
                    mochila[i].nome,
                    mochila[i].tipo,
                    mochila[i].quantidade);
-            printf("-------------------------------------------------------------\n");
+            printf("--------------------------------------------------------------\n");
             encontrado = true;
             break;
         }
@@ -131,12 +131,12 @@ void buscarItem(struct Item mochila[], int qtdItens) {
     }
 }
 
-// ------------------------------------------------------------
+// -----------------------------------------------------
 // Função principal
-// ------------------------------------------------------------
+// -----------------------------------------------------
 int main() {
-    struct Item mochila[10];
-    int qtdItens = 0;
+    Item mochila[10];     // vetor para armazenar até 10 itens
+    int qtdItens = 0;     // quantidade atual de itens
     int opcao;
 
     printf("\n===============================================\n");
@@ -144,13 +144,14 @@ int main() {
     printf("===============================================\n");
 
     do {
+        // Menu de opções
         printf("\n--- MENU DE AÇÕES ---\n");
         printf("1. Adicionar Item (Loot)\n");
         printf("2. Remover Item\n");
         printf("3. Listar Itens da Mochila\n");
         printf("4. Buscar Item\n");
         printf("0. Sair\n");
-        printf("---------------------\n");
+        printf("-----------------------\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
 
