@@ -8,6 +8,10 @@
 // Sistema de inventário (mochila de loot inicial)
 // ===============================================
 
+// -----------------------------------------------------
+// Versão com vetor (lista sequencial)
+// -----------------------------------------------------
+
 // Estrutura que representa um item da mochila
 typedef struct Item {
     char nome[30];
@@ -96,15 +100,43 @@ void removerItem(Item mochila[], int *qtdItens) {
 }
 
 // -----------------------------------------------------
-// Função que busca um item pelo nome
+// Função para escolher tipo de busca
 // -----------------------------------------------------
-void buscarItem(Item mochila[], int qtdItens) {
+void escolherTipoBusca(Item mochila[], int qtdItens) {
+
+    int tipoBusca;
+
     if (qtdItens == 0) {
         printf("\nA mochila está vazia.\n");
         return;
     }
 
+    do{
+        printf("\nQual tipo de busca deseja?\n");
+        printf("\n1. Busca Sequencial\n");
+        printf("\n1. Busca Binária\n");
+        scanf(" %[^\n]", tipoBusca);
+
+        if(tipoBusca == 1){
+            buscaSequencial(mochila, qtdItens);
+        }
+        else if (tipoBusca == 2){
+            buscaBinaria(mochila, qtdItens);
+        } else{
+            printf("\nOpção inválida! Tente novamente.\n");
+        }
+
+    } while(tipoBusca != 1 && tipoBusca != 2);
+
+}
+
+// -----------------------------------------------------
+// Função de Busca Sequencial
+// -----------------------------------------------------
+void buscaSequencial(Item mochila[], int qtdItens){
+
     char nomeBusca[30];
+
     printf("\nDigite o nome do item que deseja buscar: ");
     scanf(" %[^\n]", nomeBusca);
 
@@ -132,6 +164,38 @@ void buscarItem(Item mochila[], int qtdItens) {
 }
 
 // -----------------------------------------------------
+// Função de Busca Binária
+// -----------------------------------------------------
+void buscaBinaria(Item mochila[], int qtdItens){
+    
+    char ordenado = mochila[].sort
+    char nomeBusca[30];
+    bool encontrado = false;
+    int inicio = 0, fim = qtdItens - 1;
+    
+    printf("\nDigite o nome do item que deseja buscar: ");
+    scanf(" %[^\n]", nomeBusca);
+
+    while(inincio <= fim){
+        int meio = (inicio + fim) / 2;
+        if(mochila[meio] == nomeBusca){
+            printf("\nItem encontrado!\n");
+            printf("--------------------------------------------------------------\n");
+            printf("%-25s | %-20s | %-10s\n", "NOME", "TIPO", "QUANTIDADE");
+            printf("--------------------------------------------------------------\n");
+            printf("%-25s | %-20s | %-10d\n",
+                   mochila[i].nome,
+                   mochila[i].tipo,
+                   mochila[i].quantidade);
+            printf("--------------------------------------------------------------\n");
+            encontrado = true;
+            break;
+        } else if( mochila[meio] < nomeBusca)
+        // implementar isso e criar uma funcao para ordenar o vetor
+    }
+}
+
+// -----------------------------------------------------
 // Função principal
 // -----------------------------------------------------
 int main() {
@@ -149,7 +213,7 @@ int main() {
         printf("1. Adicionar Item (Loot)\n");
         printf("2. Remover Item\n");
         printf("3. Listar Itens da Mochila\n");
-        printf("4. Buscar Item\n");
+        printf("4. Buscar Item por Nome\n");
         printf("0. Sair\n");
         printf("-----------------------\n");
         printf("Escolha uma opção: ");
@@ -168,7 +232,7 @@ int main() {
                 listarItens(mochila, qtdItens);
                 break;
             case 4:
-                buscarItem(mochila, qtdItens);
+                escolherTipoBusca(mochila, qtdItens);
                 break;
             case 0:
                 printf("\nSaindo do jogo...\n");
